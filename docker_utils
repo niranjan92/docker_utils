@@ -1,0 +1,23 @@
+alias dgrep='docker ps | grep '
+alias dlogs='docker logs -f --tail=500 '
+
+function get_container(){
+    container=$(docker ps | grep $1 | awk '{print $1}')
+}
+
+function dlog(){
+    container=$(docker ps | grep $1 | awk '{print $1}')
+    docker logs -f --tail=500 $container
+}
+
+function dstop(){
+    container=$(docker ps | grep $1 | awk '{print $1}')
+    docker stop -t=0 $container
+}
+
+function dexec(){
+    container=$(docker ps | grep $1 | awk '{print $1}')
+    #in case of error write a handler to display which container to shut down
+    # or handle that automatically
+    docker exec -it $container /bin/bash
+}
